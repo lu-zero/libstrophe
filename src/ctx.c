@@ -249,7 +249,10 @@ void xmpp_log(const xmpp_ctx_t * const ctx,
 {
     int oldret, ret;
     char smbuf[1024];
-    char *buf;
+    char *buf = NULL;
+
+    if (!ctx->log->handler)
+        return;
 
     buf = smbuf;
     ret = xmpp_vsnprintf(buf, 1023, fmt, ap);
@@ -268,8 +271,7 @@ void xmpp_log(const xmpp_ctx_t * const ctx,
 	}
     }
 
-    if (ctx->log->handler)
-        ctx->log->handler(ctx->log->userdata, level, area, buf);
+    ctx->log->handler(ctx->log->userdata, level, area, buf);
 }
 
 /** Write to the log at the ERROR level.
