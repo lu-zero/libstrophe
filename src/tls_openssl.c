@@ -88,6 +88,7 @@ tls_t *tls_new(xmpp_ctx_t *ctx, sock_t sock)
 void tls_free(tls_t *tls)
 {
     SSL_CTX_free(tls->ssl_ctx);
+    SSL_free(tls->ssl);
     xmpp_free(tls->ctx, tls);
     return;
 }
