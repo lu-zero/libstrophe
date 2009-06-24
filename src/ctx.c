@@ -247,33 +247,33 @@ void xmpp_log(const xmpp_ctx_t * const ctx,
 	      const char * const fmt,
 	      va_list ap)
 {
-    int oldret, ret;
+    int ret;
     char smbuf[1024];
-    char *buf = NULL;
 
     if (!ctx->log->handler)
         return;
 
-    buf = smbuf;
-    ret = xmpp_vsnprintf(buf, 1023, fmt, ap);
-    if (ret > 1023) {
-	buf = (char *)xmpp_alloc(ctx, ret + 1);
+    ret = xmpp_vsnprintf(smbuf, sizeof(smbuf) - 1, fmt, ap);
+    if (ret > sizeof(smbuf) - 1) {
+        char *buf = (char *)xmpp_alloc(ctx, ret + 1);
+        int oldret = ret;
 	if (!buf) {
 	    buf = NULL;
 	    xmpp_error(ctx, "log", "Failed allocating memory for log message.");
 	    return;
 	}
-	oldret = ret;
 	ret = xmpp_vsnprintf(buf, ret + 1, fmt, ap);
 	if (ret > oldret) {
 	    xmpp_error(ctx, "log", "Unexpected error");
             free(buf);
 	    return;
 	}
+        ctx->log->handler(ctx->log->userdata, level, area, buf);
         free(buf);
+    } else {
+        ctx->log->handler(ctx->log->userdata, level, area, smbuf);
     }
 
-    ctx->log->handler(ctx->log->userdata, level, area, buf);
 }
 
 /** Write to the log at the ERROR level.
