@@ -185,8 +185,10 @@ uint64_t handler_fire_timed(xmpp_ctx_t * const ctx)
 	    handitem = handitem->next;
 
 	    /* delete handler if it returned false */
-	    if (fired && !ret)
-		xmpp_timed_handler_delete(connitem->conn, temp->handler);
+	    if (fired && !ret) {
+		xmpp_timed_handler_delete(connitem->conn,
+                                          (xmpp_timed_handler)temp->handler);
+            }
 	}
 
 	connitem = connitem->next;
