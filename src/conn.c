@@ -668,7 +668,8 @@ void conn_open_stream(xmpp_conn_t * const conn)
 static void _log_open_tag(xmpp_conn_t *conn, char **attrs)
 {
     char buf[4096];
-    size_t len, pos;
+    size_t pos;
+    int len;
     int i;
     
     if (!attrs) return;
