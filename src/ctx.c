@@ -265,11 +265,11 @@ void xmpp_log(const xmpp_ctx_t * const ctx,
 	ret = xmpp_vsnprintf(buf, ret + 1, fmt, ap);
 	if (ret > oldret) {
 	    xmpp_error(ctx, "log", "Unexpected error");
-            free(buf);
+            xmpp_free(ctx, buf);
 	    return;
 	}
         ctx->log->handler(ctx->log->userdata, level, area, buf);
-        free(buf);
+        xmpp_free(ctx, buf);
     } else {
         ctx->log->handler(ctx->log->userdata, level, area, smbuf);
     }
