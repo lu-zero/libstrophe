@@ -17,6 +17,7 @@ examples/*.o
 tests/*.o
 tests/check_parser
 tests/check_stanza
+tests/check_ctx
 *.a
 docs/html
 TAGS
