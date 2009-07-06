@@ -16,6 +16,7 @@ src/*.o
 examples/*.o
 tests/*.o
 tests/check_parser
+tests/check_stanza
 *.a
 docs/html
 TAGS
