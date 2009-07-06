@@ -11,6 +11,7 @@ autom4te.cache
 .dirstamp
 .deps
 .sconsign*
+*~
 src/*.o
 examples/*.o
 tests/*.o
