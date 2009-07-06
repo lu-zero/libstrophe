@@ -21,6 +21,9 @@ else
   AC_C_BIGENDIAN([byteorder=1234], [byteorder=4321], [], [])
 fi
 
+AC_CHECK_FUNCS(snprintf)
+AC_CHECK_FUNCS(vsnprintf)
+
 if test "x$with_libxml2" = xyes; then
   with_parser=libxml2
   PARSER_NAME=libxml2
