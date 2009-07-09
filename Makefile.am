@@ -1,6 +1,6 @@
 AUTOMAKE_OPTIONS = subdir-objects
 
-CFLAGS = -g -Wall
+CFLAGS = -g -Wall -Werror
 
 builtin_CFLAGS = -I$(top_srcdir)/expat/lib
 builtin_LIBS = libexpat.a
