@@ -237,6 +237,8 @@ static int _render_stanza_recursive(xmpp_stanza_t *stanza,
     hash_iterator_t *iter;
     const char *key;
 
+    assert(stanza);
+
     written = 0;
 
     if (stanza->type == XMPP_STANZA_UNKNOWN) return XMPP_EINVOP;
@@ -244,6 +246,7 @@ static int _render_stanza_recursive(xmpp_stanza_t *stanza,
     if (stanza->type == XMPP_STANZA_TEXT) {
 	if (!stanza->data) return XMPP_EINVOP;
 
+        assert(stanza->data);
 	ret = xmpp_snprintf(ptr, left, "%s", stanza->data);
 	if (ret < 0) return XMPP_EMEM;
 	_render_update(&written, buflen, ret, &left, &ptr);
@@ -251,6 +254,7 @@ static int _render_stanza_recursive(xmpp_stanza_t *stanza,
 	if (!stanza->data) return XMPP_EINVOP;
 
 	/* write begining of tag and attributes */
+        assert(stanza->data);
 	ret = xmpp_snprintf(ptr, left, "<%s", stanza->data);
 	if (ret < 0) return XMPP_EMEM;
 	_render_update(&written, buflen, ret, &left, &ptr);
@@ -258,6 +262,7 @@ static int _render_stanza_recursive(xmpp_stanza_t *stanza,
 	if (stanza->attributes && hash_num_keys(stanza->attributes) > 0) {
 	    iter = hash_iter_new(stanza->attributes);
 	    while ((key = hash_iter_next(iter))) {
+                assert(hash_get(stanza->attributes, key));
 		ret = xmpp_snprintf(ptr, left, " %s=\"%s\"", key,
 			       (char *)hash_get(stanza->attributes, key));
 		if (ret < 0) return XMPP_EMEM;
@@ -278,7 +283,7 @@ static int _render_stanza_recursive(xmpp_stanza_t *stanza,
 	    ret = xmpp_snprintf(ptr, left, ">");
 	    if (ret < 0) return XMPP_EMEM;
 	    _render_update(&written, buflen, ret, &left, &ptr);
-	    
+
 	    /* iterate and recurse over child stanzas */
 	    child = stanza->children;
 	    while (child) {
@@ -291,9 +296,10 @@ static int _render_stanza_recursive(xmpp_stanza_t *stanza,
 	    }
 
 	    /* write end tag */
+            assert(stanza->data);
 	    ret = xmpp_snprintf(ptr, left, "</%s>", stanza->data);
 	    if (ret < 0) return XMPP_EMEM;
-	    
+
 	    _render_update(&written, buflen, ret, &left, &ptr);
 	}
     }

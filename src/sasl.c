@@ -168,13 +168,19 @@ static void _digest_to_hex(const char *digest, char *hex)
 }
 
 /** append 'key="value"' to a buffer, growing as necessary */
-static char *_add_key(xmpp_ctx_t *ctx, hash_t *table, const char *key, 
+static char *_add_key(xmpp_ctx_t *ctx, hash_t *table, const char *key,
 		      char *buf, int *len, int quote)
 {
     int olen,nlen;
     int keylen, valuelen;
     const char *value, *qvalue;
     char *c;
+
+    assert(ctx);
+    assert(table);
+    assert(key);
+    assert(buf);
+    assert(len);
 
     /* allocate a zero-length string if necessary */
     if (buf == NULL) {

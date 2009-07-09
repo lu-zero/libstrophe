@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <assert.h>
 #ifndef _WIN32
 #include <stdint.h>
 #endif
