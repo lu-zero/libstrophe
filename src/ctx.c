@@ -251,6 +251,9 @@ void xmpp_log(const xmpp_ctx_t * const ctx,
 {
     int ret;
     char smbuf[1024];
+    va_list ap_copy;
+
+    va_copy(ap_copy, ap);
 
     if (!ctx->log->handler)
         return;
@@ -264,7 +267,7 @@ void xmpp_log(const xmpp_ctx_t * const ctx,
 	    xmpp_error(ctx, "log", "Failed allocating memory for log message.");
 	    return;
 	}
-	ret = xmpp_vsnprintf(buf, ret + 1, fmt, ap);
+	ret = xmpp_vsnprintf(buf, ret + 1, fmt, ap_copy);
 	if (ret > oldret) {
 	    xmpp_error(ctx, "log", "Unexpected error");
             xmpp_free(ctx, buf);

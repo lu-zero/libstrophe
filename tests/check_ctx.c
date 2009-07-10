@@ -12,6 +12,7 @@
 **  distribution.
 */
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -21,7 +22,8 @@
 
 #include "test.h"
 
-static xmpp_ctx_t    *ctx;
+static xmpp_ctx_t *ctx          = NULL;
+static char       *last_message = NULL;
 
 void xmpp_warn(const xmpp_ctx_t * const ctx,
                const char * const area,
@@ -31,13 +33,28 @@ void xmpp_warn(const xmpp_ctx_t * const ctx,
 /* Test support */
 /* ************************************************************ */
 
+static void capturing_logger(void *const userdata,
+                             const xmpp_log_level_t level,
+                             const char *const area,
+                             const char *const msg) {
+    if (last_message) {
+        free(last_message);
+        last_message = NULL;
+    }
+    last_message = strdup(msg);
+}
+
+static xmpp_log_t xmpp_logger_thing = { &capturing_logger, NULL };
+
 static void handle_setup(void) {
     xmpp_initialize();
-    ctx = xmpp_ctx_new(NULL, NULL);
+
+    ctx = xmpp_ctx_new(NULL, &xmpp_logger_thing);
     fail_if(ctx == NULL, "Failed to set up ctx");
 }
 
 static void handle_teardown(void) {
+    free(last_message);
     xmpp_ctx_free(ctx);
     ctx = NULL;
     xmpp_shutdown();
@@ -56,6 +73,12 @@ START_TEST(test_large_logger)
                 "The string isn't long enough.");
 
     xmpp_warn(ctx, "conn", "Big ass string:  %s", big_ass_string);
+
+    char *output = calloc(num_bytes + 32, sizeof(char));
+    snprintf(output, num_bytes + 32, "Big ass string:  %s", big_ass_string);
+    fail_unless(strcmp(output, last_message) == 0,
+                "Logged message was different.");
+    free(output);
 }
 END_TEST
 
