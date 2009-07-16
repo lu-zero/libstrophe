@@ -179,7 +179,6 @@ static char *_add_key(xmpp_ctx_t *ctx, hash_t *table, const char *key,
     assert(ctx);
     assert(table);
     assert(key);
-    assert(buf);
     assert(len);
 
     /* allocate a zero-length string if necessary */
