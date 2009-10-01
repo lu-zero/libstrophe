@@ -142,13 +142,14 @@ uint64_t handler_fire_timed(xmpp_ctx_t * const ctx)
 {
     xmpp_connlist_t *connitem;
     xmpp_handlist_t *handitem, *temp;
-    int ret, fired;
+    int fired;
     uint64_t elapsed, min;
 
     min = (uint64_t)(-1);
 
     connitem = ctx->connlist;
     while (connitem) {
+        int ret = 0; /* not the function return value, that's min */
 	if (connitem->conn->state != XMPP_STATE_CONNECTED) {
 	    connitem = connitem->next;
 	    continue;
