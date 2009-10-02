@@ -72,17 +72,17 @@ if HAVE_CHECK
 TESTS = tests/check_parser tests/check_stanza tests/check_ctx
 check_PROGRAMS = tests/check_parser tests/check_stanza tests/check_ctx
 
-tests_check_parser_SOURCES = tests/check_parser.c
+tests_check_parser_SOURCES = tests/check_parser.c tests/test.h
 tests_check_parser_CFLAGS = @check_CFLAGS@ $(PARSER_CFLAGS) $(STROPHE_FLAGS) \
 	-I$(top_srcdir)/src
 tests_check_parser_LDADD = @check_LIBS@ $(STROPHE_LIBS)
 
-tests_check_stanza_SOURCES = tests/check_stanza.c
+tests_check_stanza_SOURCES = tests/check_stanza.c tests/test.h
 tests_check_stanza_CFLAGS = @check_CFLAGS@ $(PARSER_CFLAGS) $(STROPHE_FLAGS) \
 	-I$(top_srcdir)/src
 tests_check_stanza_LDADD = @check_LIBS@ $(STROPHE_LIBS)
 
-tests_check_ctx_SOURCES = tests/check_ctx.c
+tests_check_ctx_SOURCES = tests/check_ctx.c tests/test.h
 tests_check_ctx_CFLAGS = @check_CFLAGS@ $(PARSER_CFLAGS) $(STROPHE_FLAGS) \
 	-I$(top_srcdir)/src
 tests_check_ctx_LDADD = @check_LIBS@ $(STROPHE_LIBS)
