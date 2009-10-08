@@ -126,7 +126,8 @@ then
 elif test "$GCC" = "yes"
 then
   GCC_VERSION=`$CC -dumpversion`
-  CFLAGS="$CFLAGS -Wall -pedantic -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls"
+  dnl removed -pedantic -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations
+  CFLAGS="$CFLAGS -Wall -Wredundant-decls"
   case $GCC_VERSION in
     4.4.*)
     CFLAGS="$CFLAGS -fno-strict-aliasing"
