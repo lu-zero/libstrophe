@@ -22,6 +22,8 @@
 
 #include "test.h"
 
+
+/* .... */
 START_TEST(create_destroy)
 {
     xmpp_ctx_t *ctx;
@@ -36,21 +38,21 @@ START_TEST(create_destroy)
 END_TEST
 
 int cbtest_got_start = 0;
-void cbtest_handle_start(char *name, char **attrs, void *userdata)
+void cbtest_handle_start(char *name, __attribute__ ((unused)) char **attrs, __attribute__ ((unused)) void *userdata)
 {
     if (strcmp(name, "stream:stream") == 0)
         cbtest_got_start = 1;
 }
 
 int cbtest_got_end = 0;
-void cbtest_handle_end(char *name, void *userdata)
+void cbtest_handle_end(char *name, __attribute__ ((unused)) void *userdata)
 {
     if (strcmp(name, "stream:stream") == 0)
         cbtest_got_end = 1;
 }
 
 int cbtest_got_stanza = 0;
-void cbtest_handle_stanza(xmpp_stanza_t *stanza, void *userdata)
+void cbtest_handle_stanza(xmpp_stanza_t *stanza, __attribute__ ((unused)) void *userdata)
 {
     if (strcmp(xmpp_stanza_get_name(stanza), "message") == 0)
         cbtest_got_stanza = 1;
@@ -60,7 +62,7 @@ START_TEST(callbacks)
 {
     xmpp_ctx_t *ctx;
     parser_t *parser;
-    int ret;
+    int ret= 0;
 
     ctx = xmpp_ctx_new(NULL, NULL);
     parser = parser_new(ctx, 

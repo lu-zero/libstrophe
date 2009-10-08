@@ -30,6 +30,16 @@ void xmpp_warn(const xmpp_ctx_t * const ctx,
                const char * const fmt,
                ...);
 
+static void capturing_logger(void *const userdata,
+                             const xmpp_log_level_t level,
+                             const char *const area,
+                             const char *const msg);
+
+static void handle_setup(void);
+static void handle_teardown(void);
+
+Suite *parser_suite(void);
+
 /* Test support */
 /* ************************************************************ */
 
