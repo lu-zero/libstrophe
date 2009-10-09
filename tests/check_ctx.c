@@ -38,14 +38,13 @@ static void capturing_logger(void *const userdata,
 static void handle_setup(void);
 static void handle_teardown(void);
 
-Suite *parser_suite(void);
 
 /* Test support */
 /* ************************************************************ */
 
-static void capturing_logger(void *const userdata,
-                             const xmpp_log_level_t level,
-                             const char *const area,
+static void capturing_logger(__attribute__((unused))void *const userdata,
+                             __attribute__((unused))const xmpp_log_level_t level,
+                             __attribute__((unused))const char *const area,
                              const char *const msg) {
     if (last_message) {
         free(last_message);

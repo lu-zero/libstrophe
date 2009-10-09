@@ -62,7 +62,6 @@ START_TEST(callbacks)
 {
     xmpp_ctx_t *ctx;
     parser_t *parser;
-    int ret= 0;
 
     ctx = xmpp_ctx_new(NULL, NULL);
     parser = parser_new(ctx, 
@@ -70,13 +69,13 @@ START_TEST(callbacks)
                         cbtest_handle_end,
                         cbtest_handle_stanza, NULL);
 
-    ret = parser_feed(parser, "<stream:stream>", 15);
-    ret = parser_feed(parser, "<message/>", 10);
+    parser_feed(parser, "<stream:stream>", 15);
+    parser_feed(parser, "<message/>", 10);
     parser_feed(parser, "</stream:stream>", 16);
 
-    fail_unless(cbtest_got_start == 1);
-    fail_unless(cbtest_got_end == 1);
-    fail_unless(cbtest_got_stanza == 1);
+    fail_unless(cbtest_got_start == 1, "");
+    fail_unless(cbtest_got_end == 1, "");
+    fail_unless(cbtest_got_stanza == 1, "");
 
     parser_free(parser);
     xmpp_ctx_free(ctx);
