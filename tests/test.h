@@ -5,6 +5,10 @@
 void cbtest_handle_start(char *name, char **attrs, void *userdata);
 void cbtest_handle_end(char *name, void *userdata);
 void cbtest_handle_stanza(xmpp_stanza_t *stanza, void *userdata);
+void xmpp_warn(const xmpp_ctx_t * const ctx,
+               const char * const area,
+               const char * const fmt,
+               ...);
 Suite *parser_suite(void);
 
 #define TEST_MAIN \
