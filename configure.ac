@@ -122,6 +122,7 @@ if test "$ICC" = "yes"
 then
    dnl ICC trying to be gcc.
    CFLAGS="$CFLAGS -diag-disable 187 -Wall -Werror"
+   LDFLAGS="-rpath /opt/intel/Compiler/11.0/074/lib/intel64"
    AC_DEFINE([_GNU_SOURCE],[1],[find sigignore on Linux])
 elif test "$GCC" = "yes"
 then
